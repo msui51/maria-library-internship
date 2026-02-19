@@ -4,6 +4,7 @@ import "../globals.css"
 import SearchBar from "@/component/SearchBar/SearchBar";
 import SideBar from "@/component/SideBar/SideBar";
 import styles from './for-you/page.module.css';
+import { StoreProvider } from "@/lib/provider";
 
 
 const geistSans = Geist({
@@ -29,12 +30,14 @@ export default function nonHomePageLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        
                 <div className={styles['wrapper']}>
-                    <SearchBar />
-                    <SideBar/>
-                    {children}
+                  <StoreProvider>
+                      <SearchBar />
+                      <SideBar/>
+                      {children}
+                    </StoreProvider>
                 </div>
-
       </body>
     </html>
   );

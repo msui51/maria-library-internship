@@ -7,21 +7,25 @@ import { auth } from '@/firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import Modal from '@/component/Modal/Modal';
+import { useSelector } from 'react-redux';
 
 
 function page() {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
+
+    const userEmail = useSelector((state: any) => state.authReducer.value.userEmail);
+    const isLoggedIn = useSelector((state: any) => state.authReducer.value.isAuth);
     
-    useEffect(() => {
-        onAuthStateChanged(auth, (user: FirebaseUser | null) => {
-            if (user) {
-              setIsLoggedIn(true);
-            } else {
-              setIsLoggedIn(false);
-            }
-        });
-    }, []);
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (user: FirebaseUser | null) => {
+    //         if (user) {
+    //           setIsLoggedIn(true);
+    //         } else {
+    //           setIsLoggedIn(false);
+    //         }
+    //     });
+    // }, []);
     
     function handleOpenModal(): void {
         setShowModal(true);
@@ -70,7 +74,7 @@ function page() {
                         Email
                     </div>
                     <div className={styles['settings__text']}>
-                
+                        {userEmail}
                     </div>
                 </div>
             </>

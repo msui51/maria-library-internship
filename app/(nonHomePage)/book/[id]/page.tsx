@@ -13,6 +13,8 @@ import { onAuthStateChanged,
 import { auth } from '@/firebase';
 
 import Modal from '@/component/Modal/Modal';
+import { useSelector } from 'react-redux';
+
 
 
 interface Book{
@@ -36,9 +38,10 @@ interface Book{
 
 
 async function book({params}: {params: Promise<{id: string}>}) {
-    // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     // const [showModal, setShowModal] = useState<boolean>(false);
     const {id} = await params;
+
+    // const isLoggedIn = useSelector((state: any) => state.authReducer.value.isAuth);
     
     async function getBookDetail(): Promise<Book> {
         try {
@@ -60,8 +63,10 @@ async function book({params}: {params: Promise<{id: string}>}) {
     //     });
 
     // function handleOpenModal(): void {
+    //     if (!isLoggedIn){
     //         setShowModal(true);
     //     }
+    // }
 
     // function handleCloseModal(): void {
     //         setShowModal(false);
@@ -71,7 +76,9 @@ async function book({params}: {params: Promise<{id: string}>}) {
 
    
   return (
+    
     <div className={styles['row']}>
+        {/* {showModal ? <Modal handleCloseModal={handleCloseModal} /> : null} */}
         <div className={styles['container']}>
             <div className={styles['inner__wrapper']}>
                 <div className={styles['inner__book']}>

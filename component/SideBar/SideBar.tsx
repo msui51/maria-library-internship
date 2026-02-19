@@ -17,26 +17,32 @@ import { signOut,
         } from 'firebase/auth';
 import Modal from '../Modal/Modal';
 import { on } from 'events';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '@/lib/store';
+import { logOut } from '@/lib/features/signIn/signIn';
 
 function SideBar() {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user: FirebaseUser | null) => {
-            if (user) {
-              setIsLoggedIn(true);
-            } else {
-              setIsLoggedIn(false);
-            }
-        });
-    }, []);
+    const isLoggedIn = useSelector((state: any) => state.authReducer.value.isAuth);
+
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (user: FirebaseUser | null) => {
+    //         if (user) {
+    //           setIsLoggedIn(true);
+    //         } else {
+    //           setIsLoggedIn(false);
+    //         }
+    //     });
+    // }, []);
     
 
     const handleLogout = (): void => {
         signOut(auth).then(() => {
             console.log('User signed out successfully');
-            setIsLoggedIn(false);
+            dispatch(logOut());
         }).catch((error) => {
             console.error('Error signing out:', error);
         }

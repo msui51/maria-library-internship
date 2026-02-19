@@ -14,6 +14,9 @@ import {
     signInWithEmailAndPassword, 
     signOut,
     onAuthStateChanged } from 'firebase/auth';
+import { logIn, logOut } from '@/lib/features/signIn/signIn';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/lib/store';
 
 interface Props {
   handleCloseModal: () => void;
@@ -26,7 +29,7 @@ export default function Modal({ handleCloseModal }: Props): JSX.Element {
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
   const router = useRouter();
-
+  const dispatch = useDispatch<AppDispatch>();
  
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -46,6 +49,7 @@ export default function Modal({ handleCloseModal }: Props): JSX.Element {
         uid: user.uid,
         email: user.email,
       });
+      dispatch(logIn(email));
       console.log('User added to database');
       router.push('/for-you');
     } catch (error) {
@@ -59,6 +63,7 @@ export default function Modal({ handleCloseModal }: Props): JSX.Element {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('User logged in:', user);
+      dispatch(logIn(email));
       router.push('/for-you');
     } catch (error) {
       setError(true);
