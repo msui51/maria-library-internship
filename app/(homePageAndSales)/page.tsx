@@ -1,14 +1,14 @@
 'use client';
-import "./globals.css";
+import "../globals.css";
 import { AiFillAudio, AiFillBulb, AiFillFileText } from "react-icons/ai";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
-import Modal from "../component/Modal/Modal";
+import Modal from "../../component/Modal/Modal";
 import { use, useState } from "react";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   function handleOpenModal(): void {
     setIsOpen(true);
