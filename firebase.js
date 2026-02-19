@@ -5,14 +5,14 @@ import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+// Your web app's Firebase configuration (prefer env vars in .env.local)
 const firebaseConfig = {
-  apiKey: "AIzaSyBhM84Ezx9Rg4-lilTNLwkIVs3qY4-HABo",
-  authDomain: "library-internship.firebaseapp.com",
-  projectId: "library-internship",
-  storageBucket: "library-internship.firebasestorage.app",
-  messagingSenderId: "1057487803638",
-  appId: "1:1057487803638:web:fa77265094b6dd9375c8d7"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
