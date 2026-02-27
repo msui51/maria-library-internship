@@ -23,6 +23,20 @@
     font-weight: bolder;
 }
 
+.audio__book--summary-text--small {
+    font-size: 16px;
+}
+
+.audio__book--summary-text--medium {
+    font-size: 18px;
+}
+.audio__book--summary-text--large {
+    font-size: 22px;
+}
+.audio__book--summary-text--xlarge {
+    font-size: 26px;
+}
+
 .audio__book--summary-text {
     white-space: pre-line;
     line-height: 1.4;
@@ -98,15 +112,22 @@
 }
 
 .audio__controls--btn-play {
-    background-color: #fff;
-    width: 40px;
-    height: 40px;
+    color:white;
+    width: 50px;
+    height: 50px;
 }
 
+.audio__controls--play-icon{
+    width:100%;
+    height:100%;
+}
+
+
+
 .controls__icon{
-        width: 28px;
-    height: 28px;
-    stroke: #fff;
+    width: 38px;
+    height: 38px;
+    color:white;
     transition: all .2s;
 }
 
@@ -126,12 +147,49 @@
 }
 
 .audio__progress--bar{
-    border-radius: 8px;
-    height:4px;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
     max-width: 300px;
-    width:100%;
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #3b82f6, #6ea8fe) no-repeat;
+    background-size: var(--range-progress, 0%) 100%;
     cursor: pointer;
     outline: none;
-    appearance: none;
-    --range-progress: 0.4900807653101231%;
+}
+
+/* Firefox track */
+.audio__progress--bar::-moz-range-track{
+    height: 8px;
+    background: transparent;
+}
+
+/* WebKit track (transparent because background is set on input) */
+.audio__progress--bar::-webkit-slider-runnable-track{
+    height: 8px;
+    background: transparent;
+}
+
+/* Thumb */
+.audio__progress--bar::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.15);
+    margin-top: -3px; /* center thumb on track */
+}
+.audio__progress--bar::-moz-range-thumb{
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.15);
+    border: none;
+}
+
+.audio__progress--bar:focus {
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
 }

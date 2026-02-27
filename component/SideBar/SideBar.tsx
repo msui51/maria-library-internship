@@ -20,24 +20,29 @@ import { on } from 'events';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/lib/store';
 import { logOut } from '@/lib/features/signIn/signIn';
+import { usePathname } from 'next/navigation';
+import { PiTextAa } from "react-icons/pi";
+import { fontSizeLarge, fontSizeMedium, fontSizeSmall, fontSizeXlarge } from '@/lib/features/playerFontSize/playerFontSize';
+import { useRouter } from 'next/navigation';
 
 function SideBar() {
-    // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [isPlayerPage, setIsPlayerPage] = useState<boolean>(false);
+    const [selectedFontSize, setSelectedFontSize] = useState<string>('small');
+    const [section, setSection] = useState<string>('for-you');
     const dispatch = useDispatch<AppDispatch>();
+    const pathname = usePathname();
+    const router = useRouter();
 
     const isLoggedIn = useSelector((state: any) => state.authReducer.value.isAuth);
 
-    // useEffect(() => {
-    //     onAuthStateChanged(auth, (user: FirebaseUser | null) => {
-    //         if (user) {
-    //           setIsLoggedIn(true);
-    //         } else {
-    //           setIsLoggedIn(false);
-    //         }
-    //     });
-    // }, []);
-    
+    useEffect(() => {
+        if (pathname.startsWith('/player')) {
+            setIsPlayerPage(true);
+        }else{
+            setIsPlayerPage(false);
+        }
+    }, [pathname]);
 
     const handleLogout = (): void => {
         signOut(auth).then(() => {
@@ -56,22 +61,44 @@ function SideBar() {
         setShowModal(false);
     }
 
+    const handleFontSizeSmall = (): void => {
+        dispatch(fontSizeSmall());
+        setSelectedFontSize('small');
+    }
+
+    const handleFontSizeMedium = (): void => {
+        dispatch(fontSizeMedium());
+        setSelectedFontSize('medium');
+    }
+    
+     const handleFontSizeLarge = (): void => {
+        dispatch(fontSizeLarge());
+        setSelectedFontSize('large');
+    }
+     const handleFontSizeXlarge = (): void => {
+        dispatch(fontSizeXlarge());
+        setSelectedFontSize('xlarge');
+    }
+
+
   return (
     <div className={styles['sidebar']}>
         <div className={styles['sidebar__logo']}>
             <img src='../logo.png' alt='Summarist Logo'/>
         </div>
-        <div className={styles['sidebar__wrapper']}>
+
+        <div className={isPlayerPage ? `${styles['sidebar__wrapper--player']}` : `${styles['sidebar__wrapper']}`}>
+            
             <div className={styles['sidebar__top']}>
-                <Link className={styles['sidebar__link--wrapper']} href='/for-you'>
-                    <div className={`${styles['sidebar__link--line']} ${styles['active--tab']}`}></div>
+                <Link className={styles['sidebar__link--wrapper']} href='/for-you' onClick={() => setSection('for-you')}>
+                    <div className={ `${styles['sidebar__link--line']} ${section === 'for-you' ? styles['active--tab'] : ''}`}></div>
                     <div className={styles['sidebar__icon--wrapper']}>
                         <TiHomeOutline className={styles['sidebar__icon']}/>
                     </div>
                     <div className={styles['sidebar__link--text']}>For You</div>
                 </Link>
-                <Link className={styles['sidebar__link--wrapper']} href='/library'>
-                    <div className={styles['sidebar__link--line']}></div>
+                <Link className={styles['sidebar__link--wrapper']} href='/library' onClick={() => setSection('library')}>
+                    <div className={`${styles['sidebar__link--line']} ${section === 'library' ? styles['active--tab'] : ''}`}></div>
                     <div className={styles['sidebar__icon--wrapper']}>
                         <FaRegBookmark className={styles['sidebar__icon']}/>
                     </div>
@@ -91,10 +118,40 @@ function SideBar() {
                     </div>
                     <div className={styles['sidebar__link--text']}>Search</div>
                 </div>
+                {isPlayerPage ? (
+                    <>
+                    <div className={`${styles['sidebar__link--wrapper']} ${styles['sidebar__font--size-wrapper']}`}>
+                            <div
+                                className={`${styles['sidebar__link--text']} ${styles['sidebar__font--size-icon']} ${selectedFontSize === 'small' ? styles['sidebar__font--size-icon--active'] : ''}`}
+                                onClick={handleFontSizeSmall}
+                            >
+                                <PiTextAa className={styles['sidebar__font--size-icon-small']}/>
+                            </div>
+                            <div
+                                className={`${styles['sidebar__link--text']} ${styles['sidebar__font--size-icon']} ${selectedFontSize === 'medium' ? styles['sidebar__font--size-icon--active'] : ''}`}
+                                onClick={handleFontSizeMedium}
+                            >
+                                <PiTextAa className={styles['sidebar__font--size-icon-medium']}/>
+                            </div>
+                            <div
+                                className={`${styles['sidebar__link--text']} ${styles['sidebar__font--size-icon']} ${selectedFontSize === 'large' ? styles['sidebar__font--size-icon--active'] : ''}`}
+                                onClick={handleFontSizeLarge}
+                            >
+                                <PiTextAa className={styles['sidebar__font--size-icon-large']}/>
+                            </div>
+                            <div
+                                className={`${styles['sidebar__link--text']} ${styles['sidebar__font--size-icon']} ${selectedFontSize === 'xlarge' ? styles['sidebar__font--size-icon--active'] : ''}`}
+                                onClick={handleFontSizeXlarge}
+                            >
+                                <PiTextAa className={styles['sidebar__font--size-icon-xlarge']}/>
+                            </div>
+                    </div>
+                    </>
+                ) : null}
             </div>
             <div className={styles['sidebar__bottom']}>
-                <Link className={styles['sidebar__link--wrapper']} href='/settings'>
-                    <div className={styles['sidebar__link--line']}></div>
+                <Link className={styles['sidebar__link--wrapper']} href='/settings' onClick={() => setSection('settings')}>
+                    <div className={ `${styles['sidebar__link--line']} ${section === 'settings' ? styles['active--tab'] : ''}`}></div>
                     <div className={styles['sidebar__icon--wrapper']}>
                         <CiSettings className={styles['sidebar__icon']}/>
                     </div>
