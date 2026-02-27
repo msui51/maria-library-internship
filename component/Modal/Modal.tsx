@@ -20,10 +20,11 @@ import { AppDispatch } from '@/lib/store';
 
 interface Props {
   handleCloseModal: () => void;
+  showModal?: boolean;
 }
   
 
-export default function Modal({ handleCloseModal }: Props): JSX.Element {
+export default function Modal({ handleCloseModal, showModal }: Props): JSX.Element {
   const [signUp, setSignUp] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -71,6 +72,11 @@ export default function Modal({ handleCloseModal }: Props): JSX.Element {
     }
   }
 
+  const handleGuestLogin = (): void => {
+    dispatch(logIn('guest@summarist.com'));
+    router.push('/for-you');
+  }
+
   const handleSignUp = (): void => {
     if(signUp) {
       setSignUp(false);
@@ -83,6 +89,7 @@ export default function Modal({ handleCloseModal }: Props): JSX.Element {
     <>
       {/* <div className="sidebar__overlay sidebar__overlay--hidden">
       </div> */}
+      
       <div className={styles['auth__wrapper']}>
         {!signUp ? (
         <>
@@ -92,12 +99,10 @@ export default function Modal({ handleCloseModal }: Props): JSX.Element {
               Log in to Summarist
               </div>
               {error ? <div className={styles['auth__error']}>Invalid email or password. Please try again.</div> : null}
-              <Link href='/for-you'>
-              <button className={`${styles.btn} ${styles['guest__btn--wrapper']}`}>
+              <button className={`${styles.btn} ${styles['guest__btn--wrapper']}`} onClick={handleGuestLogin}>
                 <FaUser className={`${styles['google__icon--mask']} ${styles['guest__icon--mask']}`}/>
                 <div>Login as Guest</div>
               </button>
-              </Link>
               <div className={styles['auth__separator']}>
                 <span className={styles['auth__separator--text']}>or</span>
               </div>
@@ -175,6 +180,7 @@ export default function Modal({ handleCloseModal }: Props): JSX.Element {
         </>
       )}
       </div>
+      
     </>
   )
 }

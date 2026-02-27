@@ -13,6 +13,7 @@ type Book = {
   subTitle: string;
   imageLink: string;
   subscriptionRequired: boolean;
+  averageRating: number;
 }
 
 interface Props {
@@ -45,7 +46,7 @@ function RecommendedBooksCarousel({ recommendedBooks }: Props) {
               <div className={styles['recommended__book--details-icon-wrapper']}>
                 <FaRegStar className={styles['recommended__book--details-icon']} />
               </div>
-              <div className={styles['recommended__book--details-text']}>4.4</div>
+              <div className={styles['recommended__book--details-text']}>{book.averageRating}</div>
             </div>
           </div>
         </Link>

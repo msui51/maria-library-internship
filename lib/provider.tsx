@@ -2,8 +2,13 @@
 
 import { Provider } from 'react-redux';
 import { makeStore } from './store';
-const store = makeStore();
+import { useRef } from 'react';
+
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
-  return <Provider store={store}>{children}</Provider>;
+  const storeRef = useRef<ReturnType<typeof makeStore> | null>(null);
+  if (!storeRef.current) {
+    storeRef.current = makeStore();
+  }
+  return <Provider store={storeRef.current}>{children}</Provider>;
 }

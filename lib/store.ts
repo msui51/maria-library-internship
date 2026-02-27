@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './features/signIn/signIn';
+import playerFontSizeReducer from './features/playerFontSize/playerFontSize';
+import searchReducer from './features/search/search';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
         authReducer,
+        playerFontSizeReducer,
+        searchReducer,
     }
   })
 }
