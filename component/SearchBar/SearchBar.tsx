@@ -6,7 +6,7 @@ import { IoIosSearch } from "react-icons/io";
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/lib/store';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { usePathname } from 'next/navigation';
 
 interface Book{
   id: string;
@@ -18,12 +18,16 @@ interface Book{
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const pathName = usePathname();
   const dispatch = useDispatch<AppDispatch>();
   const handleSearchBook = (event: React.ChangeEvent<HTMLInputElement>): void => {
     dispatch(searchBook(event.target.value));
     setSearchTerm(event.target.value);
   }
 
+  useEffect(()=>{
+    setSearchTerm('')
+  },[pathName])
  
   return (
     <div className={styles['search__background']}>
@@ -35,8 +39,8 @@ function SearchBar() {
                 className={styles['search__input']}
                 type="text"
                 placeholder="Search for books"
+                value={searchTerm}
                 onChange={handleSearchBook}
-                
               />
               <div className={styles['search__icon--wrapper']}>
                 <IoIosSearch className={styles['search__icon']} />

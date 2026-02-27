@@ -5,6 +5,7 @@ import Link from "next/link"
 import { IoTimeOutline } from "react-icons/io5";
 import { FaRegStar } from "react-icons/fa6";
 import { useState } from 'react';
+import formatTime from '@/lib/utils/formatTime';
 
 type Book = {
   id: string;
@@ -14,6 +15,7 @@ type Book = {
   imageLink: string;
   subscriptionRequired: boolean;
   averageRating: number;
+  audioLink: string;
 }
 
 interface Props {
@@ -21,6 +23,13 @@ interface Props {
 }
 
 function RecommendedBooksCarousel({ recommendedBooks }: Props) {
+  const [durations, setDurations] = useState<Record<string, number>>({});
+
+        // replaced audioRef logic; we'll update duration directly in map
+        const handleLoadedMetadata = (id: string, event: React.SyntheticEvent<HTMLAudioElement>) => {
+            const audio = event.currentTarget;
+            setDurations(prev => ({ ...prev, [id]: audio.duration }));
+        };
 
   return (
     <>
@@ -29,6 +38,10 @@ function RecommendedBooksCarousel({ recommendedBooks }: Props) {
             {book.subscriptionRequired ? (
                 <div className={styles['book__pill']}>Premium</div>
             ): null}
+          <audio
+                  src={book.audioLink}
+                  onLoadedMetadata={e => handleLoadedMetadata(book.id, e)}
+            ></audio>
           <figure className={styles['book__image--wrapper']}>
             <img className={styles['book__image']} src={book.imageLink} alt={`${book.title} Cover Image`} />
           </figure>
@@ -40,7 +53,7 @@ function RecommendedBooksCarousel({ recommendedBooks }: Props) {
               <div className={styles['recommended__book--details-icon-wrapper']}>
                 <IoTimeOutline className={styles['recommended__book--details-icon']} />
               </div>
-              <div className={styles['recommended__book--details-text']}>03:24</div>
+              <div className={styles['recommended__book--details-text']}>{formatTime(durations[book.id] || 0)}</div>
             </div>
             <div className={styles['recommended__book--details']}>
               <div className={styles['recommended__book--details-icon-wrapper']}>

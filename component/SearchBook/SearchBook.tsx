@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { IoTimeOutline } from 'react-icons/io5';
 import { useEffect, useRef, useState } from 'react';
+import formatTime from '@/lib/utils/formatTime';
 
 
 
@@ -15,18 +16,6 @@ interface Book{
   audioLink: string;
 }
 
-//  async function searchBookTerm(): Promise<Book[]> {
-//     const searchResults = useSelector((state: any) => state.searchReducer.value.searchTerm);
-//     console.log("Search term in SearchBook component:", searchResults);
-//         try {
-//             const res = await fetch(`https://us-central1-summaristt.cloudfunctions.net/getBooksByAuthorOrTitle?search=${searchResults}`)
-//             if (!res.ok) throw new Error(`API error: ${res.status}`);
-//             const bookList: Book[] = await res.json();
-//             return bookList;
-//         }catch (error) {
-//             console.error('Failed to fetch book details:', error);
-//             throw error;
-//     }}
 
 function SearchBook() {
         const searchResults = useSelector((state: any) => state.searchReducer.value.searchTerm);
@@ -37,16 +26,9 @@ function SearchBook() {
         // replaced audioRef logic; we'll update duration directly in map
         const handleLoadedMetadata = (id: string, event: React.SyntheticEvent<HTMLAudioElement>) => {
             const audio = event.currentTarget;
-            console.log(audio.duration)
             setDurations(prev => ({ ...prev, [id]: audio.duration }));
-            console.log("Audio duration for", id, audio.duration);
         };
 
-        const formatTime = (time: number) => {
-            const minutes = Math.floor(time / 60);
-            const seconds = Math.floor(time % 60);
-            return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-        };
 
         useEffect(() => {
             if(!searchResults) return;

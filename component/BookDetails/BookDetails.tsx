@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
 import { useRouter } from "next/navigation";
 import book from "@/app/(nonHomePage)/book/[id]/page";
+import formatTime from "@/lib/utils/formatTime";
 
 interface Book{
   id: string;
@@ -35,6 +36,8 @@ interface Book{
 
 function BookDetails({bookDetail}: {bookDetail: Book}) {
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [durations, setDurations] = useState<Record<string, number>>({});
+
     const router = useRouter();
     const isLoggedIn = useSelector((state: any) => state.authReducer.value.isAuth);
     const handleOpenModal = (): void => {
@@ -49,12 +52,21 @@ function BookDetails({bookDetail}: {bookDetail: Book}) {
     const handleCloseModal = (): void => {
         setShowModal(false);
     }
+
+    const handleLoadedMetadata = (id: string, event: React.SyntheticEvent<HTMLAudioElement>) => {
+            const audio = event.currentTarget;
+            setDurations(prev => ({ ...prev, [id]: audio.duration }));
+        };
     
 
   return (
     <div className={styles['inner__wrapper']}>
         {showModal ? <Modal handleCloseModal={handleCloseModal} showModal={showModal} /> : null}
                 <div className={styles['inner__book']}>
+                    <audio
+                        src={bookDetail.audioLink}
+                        onLoadedMetadata={e => handleLoadedMetadata(bookDetail.id, e)}
+                    ></audio>
                     <div className={styles['inner-book__title']}>{bookDetail.title}</div>
                     <div className={styles['inner-book__author']}>{bookDetail.author}</div>
                     <div className={styles['inner-book__sub--title']}>{bookDetail.subTitle}</div>
@@ -76,7 +88,7 @@ function BookDetails({bookDetail}: {bookDetail: Book}) {
                                     <IoTimeOutline className={styles['inner-book__icon--mask']}/>
                                 </div>
                                 <div className={styles['inner-book__duration']}>
-                        
+                                    {formatTime(durations[bookDetail.id] || 0)}
                                 </div>
                             </div>
                             <div className={styles['inner-book__description']}>
