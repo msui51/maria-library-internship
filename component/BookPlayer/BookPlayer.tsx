@@ -52,6 +52,23 @@ function BookPlayer({bookDetail}: Props) {
     }
   };
 
+  const rewind10 = () => {
+    if (audioRef.current) {
+      const newTime = Math.max(0, audioRef.current.currentTime - 10);
+      audioRef.current.currentTime = newTime;
+      handleTimeUpdate();
+    }
+  };
+
+  const forward10 = () => {
+    if (audioRef.current) {
+      const dur = audioRef.current.duration || 0;
+      const newTime = Math.min(dur, audioRef.current.currentTime + 10);
+      audioRef.current.currentTime = newTime;
+      handleTimeUpdate();
+    }
+  };
+
 const handleLoadedMetadata = () => {
     if (audioRef.current) {
       setDuration(audioRef.current.duration);
@@ -140,13 +157,13 @@ const handleLoadedMetadata = () => {
             </div>
             <div className={styles['audio__controls--wrapper']}>
                 <div className={styles['audio__controls']}>
-                    <button className={styles['audio__controls--btn']}>
+                    <button className={styles['audio__controls--btn']} onClick={rewind10}>
                         <MdReplay10 className={styles['controls__icon']}/>
                     </button>
                     <button className={`${styles['audio__controls--btn']} ${styles['audio__controls--btn-play']}`} onClick={handlePlayPause}>
                        {isPlaying ? <FaPauseCircle className={styles['audio__controls--play-icon']}/> : <FaPlayCircle className={styles['audio__controls--play-icon']}/>}
                     </button>
-                    <button className={styles['audio__controls--btn']}>
+                    <button className={styles['audio__controls--btn']} onClick={forward10}>
                         <MdOutlineForward10 className={styles['controls__icon']}/>
                     </button>
                 </div>

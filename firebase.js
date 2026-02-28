@@ -6,6 +6,7 @@ import { getFirestore } from "firebase/firestore";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration (prefer env vars in .env.local)
+// make sure environment variables are set, otherwise Firebase will throw obscure errors later
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -14,6 +15,15 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
+
+// debug output during development
+if (process.env.NODE_ENV === 'development') {
+  Object.entries(firebaseConfig).forEach(([key, value]) => {
+    if (!value) {
+      console.warn(`Firebase config missing ${key}`);
+    }
+  });
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
