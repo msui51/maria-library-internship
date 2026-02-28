@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { JSX, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {auth, db} from '../../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
 import { 
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
@@ -40,19 +40,24 @@ export default function Modal({ handleCloseModal, showModal }: Props): JSX.Eleme
     setPassword(e.target.value);
   }
 
+  const closeAndNavigate = (url: string) => {
+    handleCloseModal();
+    router.push(url);
+  };
+
   const handleSignUpWithEmail = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('User signed up:', user);
-      await addDoc(collection(db, "users"), {
+      await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: user.email,
       });
       dispatch(logIn(email));
       console.log('User added to database');
-      router.push('/for-you');
+      closeAndNavigate('/for-you');
     } catch (error) {
       console.error('Error signing up:', error);
     }
@@ -65,7 +70,7 @@ export default function Modal({ handleCloseModal, showModal }: Props): JSX.Eleme
       const user = userCredential.user;
       console.log('User logged in:', user);
       dispatch(logIn(email));
-      router.push('/for-you');
+      closeAndNavigate('/for-you');
     } catch (error) {
       setError(true);
       console.error('Error logging in:', error);
@@ -74,7 +79,7 @@ export default function Modal({ handleCloseModal, showModal }: Props): JSX.Eleme
 
   const handleGuestLogin = (): void => {
     dispatch(logIn('guest@summarist.com'));
-    router.push('/for-you');
+    closeAndNavigate('/for-you');
   }
 
   const handleSignUp = (): void => {
