@@ -24,7 +24,7 @@ export default function Home() {
       <nav className="nav">
         <div className="nav__wrapper">
           <figure className="nav__img--mask">
-            <img className="nav__img" src={require('../../public/logo.png')} alt="logo" />
+            <img className="nav__img" src="/logo.png" alt="logo" />
           </figure>
           <ul className="nav__list--wrapper">
             <li className="nav__list nav__list--login" onClick={handleOpenModal}>Login</li>
@@ -53,7 +53,7 @@ export default function Home() {
                 <button className="btn home__cta--btn" onClick={handleOpenModal}>Login</button>
               </div>
               <figure className="landing__image--mask">
-                <img src={require('../../public/landing.png')} alt="landing" />
+                <img src="/landing.png" alt="landing" />
               </figure>
             </div>
           </div>
