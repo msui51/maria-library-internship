@@ -1,10 +1,11 @@
+
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css"
 import SearchBar from "@/component/SearchBar/SearchBar";
 import SideBar from "@/component/SideBar/SideBar";
-import styles from './for-you/page.module.css';
-
+import styles from './page.module.css';
 
 
 const geistSans = Geist({
@@ -27,12 +28,15 @@ export default function nonHomePageLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
   return (
     
       
         <div className={styles['wrapper']}>
-              <SearchBar />
-              <SideBar/>
+              <SearchBar  />
+              <SideBar />
               {children}
         </div>
   );

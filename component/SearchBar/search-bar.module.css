@@ -62,3 +62,16 @@
     height: 24px;
     color: #03314b;
 }
+
+.search__toggle--btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .search__toggle--btn {
+        display: flex;
+    }
+}

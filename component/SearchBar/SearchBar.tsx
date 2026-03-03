@@ -7,6 +7,9 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/lib/store';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import { openSidebar } from '@/lib/features/showSideBar/showSideBar';
+
 
 interface Book{
   id: string;
@@ -16,6 +19,8 @@ interface Book{
   audioLink: string;
 }
 
+
+
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const pathName = usePathname();
@@ -23,6 +28,10 @@ function SearchBar() {
   const handleSearchBook = (event: React.ChangeEvent<HTMLInputElement>): void => {
     dispatch(searchBook(event.target.value));
     setSearchTerm(event.target.value);
+  }
+
+  const handleSideBarToggle = (): void => {
+    dispatch(openSidebar());
   }
 
   useEffect(()=>{
@@ -46,6 +55,9 @@ function SearchBar() {
                 <IoIosSearch className={styles['search__icon']} />
               </div>
             </div>
+          </div>
+          <div className={styles['search__toggle--btn']} onClick={handleSideBarToggle}>
+            <HiOutlineDotsVertical className={styles['search__toggle--icon']} />
           </div>
         </div>
         {searchTerm ? <SearchBook  /> : null}
