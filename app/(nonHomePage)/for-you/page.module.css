@@ -206,3 +206,24 @@
     50% { opacity: 0.4; }
     100% { opacity: 1; }
 }
+
+@media (max-width: 768px){
+  .wrapper{
+    margin-left: 0;
+    width:100%;
+  }
+}
+
+@media (max-width: 768px) {
+    .selected__book {
+        width: 100%;
+        flex-direction: column;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .selected__book {
+        width: 100%;
+    }
+}

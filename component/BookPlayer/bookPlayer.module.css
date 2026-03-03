@@ -193,3 +193,18 @@
 .audio__progress--bar:focus {
     box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
 }
+
+@media (max-width: 768px) {
+    .audio__wrapper>div {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .audio__wrapper {
+        height: 180px;
+        padding: 16px 24px;
+        flex-direction: column;
+    }
+}

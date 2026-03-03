@@ -137,3 +137,32 @@
 .sidebar__font--size-icon--active {
     border-bottom: 3px solid #2bd97c;
 }
+
+.sidebar__overlay--hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #3a4649;
+    transition: opacity .4s ease 0s;
+    z-index: 10;
+    opacity: .65;
+    pointer-events: auto;
+}
+
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    .sidebar__opened {
+    transform: translateX(0);
+    width: 80%;
+}
+}

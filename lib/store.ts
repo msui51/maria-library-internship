@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './features/signIn/signIn';
 import playerFontSizeReducer from './features/playerFontSize/playerFontSize';
 import searchReducer from './features/search/search';
+import showSidebarReducer from './features/showSideBar/showSideBar';
 
 export const makeStore = () => {
   return configureStore({
@@ -9,6 +10,7 @@ export const makeStore = () => {
         authReducer,
         playerFontSizeReducer,
         searchReducer,
+        showSidebarReducer,
     }
   })
 }
