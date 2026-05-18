@@ -1,10 +1,21 @@
 ## Summary
-Book-summary platform with user auth, Firestore data layer, Stripe subscription billing, and a dynamic audio player with seek controls. 
+
+A book summary platform where users can sign up, explore summaries, and listen with an audio player.
+
+## Features
+
+- create an account and log in
+- browse book summaries
+- listen using an audio player with seek controls
+- access subscription features with Stripe billing
 
 ## Built with
+
 - React
 - Next.js
 - TypeScript
-- Firebase
+- Firebase/Firestore
 - Redux
-- Stripe 
+- Stripe
+
+
