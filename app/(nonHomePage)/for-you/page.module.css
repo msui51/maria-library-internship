@@ -10,14 +10,14 @@
     padding: 40px 0;
     width: 100%;
 }
-.wrapper {
+/* .wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
     margin-left: 200px;
     width: calc(100% - 200px);
     transition: all .3s;
-}
+} */
 
 .for-you__title {
     font-size: 22px;
@@ -207,12 +207,6 @@
     100% { opacity: 1; }
 }
 
-@media (max-width: 768px){
-  .wrapper{
-    margin-left: 0;
-    width:100%;
-  }
-}
 
 @media (max-width: 768px) {
     .selected__book {
